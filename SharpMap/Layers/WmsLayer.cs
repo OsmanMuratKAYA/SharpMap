@@ -80,7 +80,7 @@ namespace SharpMap.Layers
         private Color _bgColor = Color.White;
         //private readonly string _capabilitiesUrl;
         private Envelope _envelope;
-
+        private string _cqlFilter;
         /// <summary>
         /// Initializes a new layer, and downloads and parses the service description
         /// </summary>
@@ -300,6 +300,14 @@ namespace SharpMap.Layers
 
         }
 
+        /// <summary>
+        /// Set the cql filter to layer
+        /// </summary>
+        public string CQL_FILTER
+        {
+            get { return _cqlFilter; }
+            set { _cqlFilter = value; }
+        }
 
         /// <summary>
         /// Gets the service description from this server
@@ -778,6 +786,11 @@ namespace SharpMap.Layers
             {
                 //var background = Uri.EscapeDataString(ColorTranslator.ToHtml(_bgColor));
                 strReq.AppendFormat("&BGCOLOR={0}", ToHexValue(_bgColor));
+            }
+            
+            if (!string.IsNullOrEmpty(CQL_FILTER))
+            {
+                strReq.AppendFormat("&CQL_FILTER=({0})", CQL_FILTER);
             }
             return strReq.ToString();
         }
